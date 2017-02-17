@@ -39,7 +39,7 @@ class CheckCodeStyleCodeSnifferPreCommitExecutor extends PreCommitExecutor
 
         if (true === $data['enabled']) {
             if (!is_array($data['standard'])) {
-                $data['standard'] = array($data['standard']);
+                $data['standard'] = array($data['standard'] => true);
             }
             foreach ($data['standard'] as $standard => $isActivated) {
                 if (true === $isActivated) {
