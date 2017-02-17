@@ -1,5 +1,5 @@
 {
-    "name": "bruli/php-git-hooks",
+    "name": "jeleb-smile/php-git-hooks",
     "description": "Git hooks for PHP projects.",
     "license": "MIT",
     "keywords": [
