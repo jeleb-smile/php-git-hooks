@@ -16,14 +16,14 @@ pre-commit:
     phpcs:
         enabled:    true
         standard:   
-            pear:     true
-            psr2:     true
-            squiz:    true
-            phpcs:    true
-            psr1:     true
-            zend:     true
-            mysource: true
-            symfony2: true
+            PEAR:     true
+            PSR1:     true
+            PSR2:     true
+            Squiz:    true
+            PHPCS:    true
+            Zend:     true
+            MySource: true
+            Symfony2: true
     phpmd:          true
     composer:       true
   message:

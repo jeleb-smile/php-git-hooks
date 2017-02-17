@@ -27,7 +27,7 @@ class CodeSnifferHandler extends ToolHandler
      */
     public function run(array $messages)
     {
-        $this->outputHandler->setTitle('Checking code style with PHPCS');
+        $this->outputHandler->setTitle('Checking '.$this->standard.' code style with PHPCS');
         $this->output->write($this->outputHandler->getTitle());
 
         foreach ($this->files as $file) {
