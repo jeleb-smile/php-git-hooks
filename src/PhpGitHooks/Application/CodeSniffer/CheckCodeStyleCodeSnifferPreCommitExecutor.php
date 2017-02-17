@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CheckCodeStyleCodeSnifferPreCommitExecutor extends PreCommitExecutor
 {
-    /** @var  CodeSnifferHandler */
+    /** @var CodeSnifferHandler */
     private $codeSnifferHandler;
 
     /**
@@ -38,12 +38,34 @@ class CheckCodeStyleCodeSnifferPreCommitExecutor extends PreCommitExecutor
         $data = $this->preCommitConfig->extraOptions($this->commandName());
 
         if (true === $data['enabled']) {
-            $this->codeSnifferHandler->setOutput($output);
-            $this->codeSnifferHandler->setFiles($files);
-            $this->codeSnifferHandler->setNeddle($needle);
-            $this->codeSnifferHandler->setStandard($data['standard']);
-            $this->codeSnifferHandler->run($this->getMessages());
+            if (!is_array($data['standard'])) {
+                $data['standard'] = array($data['standard']);
+            }
+            foreach ($data['standard'] as $standard => $isActivated) {
+                if (true === $isActivated) {
+                    $this->process($output, $files, $needle, $standard);
+                }
+            }
         }
+    }
+
+    /**
+     * [process description].
+     *
+     * @param OutputInterface $output   [description]
+     * @param array           $files    [description]
+     * @param [type]          $needle   [description]
+     * @param [type]          $standard [description]
+     *
+     * @throws InvalidCodingStandardException
+     */
+    protected function process(OutputInterface $output, array $files, $needle, $standard)
+    {
+        $this->codeSnifferHandler->setOutput($output);
+        $this->codeSnifferHandler->setFiles($files);
+        $this->codeSnifferHandler->setNeddle($needle);
+        $this->codeSnifferHandler->setStandard($standard);
+        $this->codeSnifferHandler->run($this->getMessages());
     }
 
     /**

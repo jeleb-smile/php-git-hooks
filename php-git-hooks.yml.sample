@@ -15,7 +15,15 @@ pre-commit:
     phplint:        true
     phpcs:
         enabled:    true
-        standard:   PSR2
+        standard:   
+            pear:     true
+            psr2:     true
+            squiz:    true
+            phpcs:    true
+            psr1:     true
+            zend:     true
+            mysource: true
+            symfony2: true
     phpmd:          true
     composer:       true
   message:
