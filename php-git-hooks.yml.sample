@@ -9,7 +9,7 @@ pre-commit:
             psr1:     true
             psr2:     true
             symfony:  true
-
+        options: '--dry-run'
     phpunit:
         enabled:        true
         random-mode:    true
