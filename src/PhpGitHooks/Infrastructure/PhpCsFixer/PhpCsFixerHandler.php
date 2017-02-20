@@ -14,7 +14,7 @@ class PhpCsFixerHandler extends ToolHandler implements InteractiveToolInterface,
     private $files;
     /** @var string */
     private $filesToAnalyze;
-    /** @var  array */
+    /** @var array */
     private $levels = [];
 
     /**

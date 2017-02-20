@@ -19,13 +19,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class QualityCodeTool extends Application
 {
-    /** @var  OutputInterface */
+    /** @var OutputInterface */
     private $output;
-    /** @var  array */
+    /** @var array */
     private $files;
-    /** @var  Container */
+    /** @var Container */
     private $container;
-    /** @var  OutputHandler */
+    /** @var OutputHandler */
     private $outputTitleHandler;
     /** @var HookConfigInterface */
     private $configData;
@@ -85,7 +85,7 @@ class QualityCodeTool extends Application
             'json' => false,
         ];
 
-        foreach ($this->files as $file) {
+        foreach ($this->files as $index => $file) {
             if (true === (bool) preg_match(self::PHP_FILES, $file)) {
                 $files['php'] = true;
             }
@@ -97,9 +97,23 @@ class QualityCodeTool extends Application
             if (true === (bool) preg_match(self::JSON_FILES, $file)) {
                 $files['json'] = true;
             }
+
+            // supprime l'entrée dans le tableau d'un fichier correspondant à un fichier ou dossier à ignorer
+            $this->processingIgnoreFiles($index, $file);
         }
 
         return $files;
+    }
+
+    private function processingIgnoreFiles($index, $file)
+    {
+        $ignore = $this->configData->extraOptions('ignore');
+
+        foreach ($ignore as $path) {
+            if (true === (bool) preg_match("#$path.*#", $file)) {
+                unset($this->files[$index]);
+            }
+        }
     }
 
     private function execute()

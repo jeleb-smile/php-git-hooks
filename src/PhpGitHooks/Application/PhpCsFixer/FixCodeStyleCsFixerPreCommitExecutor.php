@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class FixCodeStyleCsFixerPreCommitExecutor extends PreCommitExecutor
 {
-    /** @var  PhpCsFixerHandler */
+    /** @var PhpCsFixerHandler */
     private $phpCsFixerHandler;
 
     /**
