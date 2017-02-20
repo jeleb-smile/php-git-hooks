@@ -16,6 +16,8 @@ class PhpCsFixerHandler extends ToolHandler implements InteractiveToolInterface,
     private $filesToAnalyze;
     /** @var array */
     private $levels = [];
+    /** @var string */
+    private $options = null;
 
     /**
      * @throws PhpCsFixerException
@@ -40,7 +42,7 @@ class PhpCsFixerHandler extends ToolHandler implements InteractiveToolInterface,
                         array(
                             'php',
                             'bin/php-cs-fixer',
-                            '--dry-run',
+                            $this->options,
                             'fix',
                             $file,
                             '--level='.$level,
@@ -94,5 +96,12 @@ class PhpCsFixerHandler extends ToolHandler implements InteractiveToolInterface,
     public function setLevels(array $levels)
     {
         $this->levels = $levels;
+    }
+    /**
+     * @param array $options
+     */
+    public function setOptions($options = '--dry-run')
+    {
+        $this->options = $options;
     }
 }
