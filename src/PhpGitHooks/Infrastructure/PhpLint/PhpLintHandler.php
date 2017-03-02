@@ -30,7 +30,11 @@ class PhpLintHandler extends ToolHandler implements FilesToolHandlerInterface
         $this->outputHandler->setTitle('Running PHPLint');
         $this->output->write($this->outputHandler->getTitle());
 
+        // start and displays the progress bar
+        $this->progress->start();
+
         foreach ($this->files as $file) {
+            $this->progress->advance();
             if (!preg_match(self::NEEDLE, $file)) {
                 continue;
             }
@@ -50,14 +54,8 @@ class PhpLintHandler extends ToolHandler implements FilesToolHandlerInterface
             throw new PhpLintException();
         }
 
-        $this->output->writeln($this->outputHandler->getSuccessfulStepMessage());
-    }
+        $this->progress->finish();
 
-    /**
-     * @param array $files
-     */
-    public function setFiles(array $files)
-    {
-        $this->files = $files;
+        $this->output->writeln($this->outputHandler->getSuccessfulStepMessage());
     }
 }

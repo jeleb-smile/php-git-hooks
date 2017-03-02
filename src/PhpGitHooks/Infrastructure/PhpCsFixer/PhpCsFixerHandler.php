@@ -28,10 +28,12 @@ class PhpCsFixerHandler extends ToolHandler implements InteractiveToolInterface,
             if (true === $value) {
                 $this->outputHandler->setTitle('Checking '.strtoupper($level).' code style with PHP-CS-FIXER');
                 $this->output->write($this->outputHandler->getTitle());
-
+                // start and displays the progress bar
+                $this->progress->start();
                 $errors = array();
 
                 foreach ($this->files as $file) {
+                    $this->progress->advance();
                     $srcFile = preg_match($this->filesToAnalyze, $file);
 
                     if (!$srcFile) {
@@ -62,24 +64,11 @@ class PhpCsFixerHandler extends ToolHandler implements InteractiveToolInterface,
                     throw new PhpCsFixerException(implode('', $errors));
                 }
 
+                $this->progress->finish();
+
                 $this->output->writeln($this->outputHandler->getSuccessfulStepMessage());
             }
         }
-    }
-
-    /**
-     * throw new PhpCsFixerException(implode('', $errors));
-     * }.
-     *
-     * $this->output->writeln($this->outputHandler->getSuccessfulStepMessage());
-     * }
-     *
-     * /**
-     * @param array $files
-     */
-    public function setFiles(array $files)
-    {
-        $this->files = $files;
     }
 
     /**

@@ -30,7 +30,11 @@ class CodeSnifferHandler extends ToolHandler
         $this->outputHandler->setTitle('Checking '.$this->standard.' code style with PHPCS');
         $this->output->write($this->outputHandler->getTitle());
 
-        foreach ($this->files as $file) {
+        // start and displays the progress bar
+        $this->progress->start();
+
+        foreach ($this->files as $index => $file) {
+            $this->progress->advance();
             if (!preg_match($this->neddle, $file)) {
                 continue;
             }
@@ -44,10 +48,13 @@ class CodeSnifferHandler extends ToolHandler
                 $this->outputHandler->setError($phpCs->getOutput());
                 $this->output->writeln($this->outputHandler->getError());
                 $this->output->writeln(BadJobLogo::paint($messages[MessageConfigData::KEY_ERROR_MESSAGE]));
+                $this->output->writeln('Break at '.$file);
 
                 throw new InvalidCodingStandardException();
             }
         }
+
+        $this->progress->finish();
 
         $this->output->writeln($this->outputHandler->getSuccessfulStepMessage());
     }
@@ -58,14 +65,6 @@ class CodeSnifferHandler extends ToolHandler
     public function setNeddle($neddle)
     {
         $this->neddle = $neddle;
-    }
-
-    /**
-     * @param array $files
-     */
-    public function setFiles($files)
-    {
-        $this->files = $files;
     }
 
     /**

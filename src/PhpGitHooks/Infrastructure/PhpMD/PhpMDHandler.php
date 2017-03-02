@@ -28,9 +28,13 @@ class PhpMDHandler extends ToolHandler implements RecursiveToolInterface
         $this->outputHandler->setTitle('Checking code mess with PHPMD');
         $this->output->write($this->outputHandler->getTitle());
 
+        // start and displays the progress bar
+        $this->progress->start();
+
         $errors = [];
 
         foreach ($this->files as $file) {
+            $this->progress->advance();
             if (!preg_match($this->needle, $file)) {
                 continue;
             }
@@ -63,6 +67,8 @@ class PhpMDHandler extends ToolHandler implements RecursiveToolInterface
             throw new PHPMDViolationsException(implode('', $errors));
         }
 
+        $this->progress->finish();
+
         $this->output->writeln($this->outputHandler->getSuccessfulStepMessage());
     }
 
@@ -72,13 +78,5 @@ class PhpMDHandler extends ToolHandler implements RecursiveToolInterface
     public function setNeedle($needle)
     {
         $this->needle = $needle;
-    }
-
-    /**
-     * @param array $files
-     */
-    public function setFiles($files)
-    {
-        $this->files = $files;
     }
 }

@@ -25,9 +25,14 @@ final class JsonLintHandler extends ToolHandler implements RecursiveToolInterfac
         $this->outputHandler->setTitle(sprintf('Checking json code with %s', strtoupper('jsonlint')));
         $this->output->write($this->outputHandler->getTitle());
 
+        // start and displays the progress bar
+        $this->progress->start();
+
         $errors = [];
 
         foreach ($this->files as $file) {
+            $this->progress->advance();
+
             if (!preg_match($this->needle, $file)) {
                 continue;
             }
@@ -55,6 +60,7 @@ final class JsonLintHandler extends ToolHandler implements RecursiveToolInterfac
             $this->output->writeln(BadJobLogo::paint($messages[MessageConfigData::KEY_ERROR_MESSAGE]));
             throw new JsonLintViolationsException(implode('', $errors));
         }
+        $this->progress->finish();
 
         $this->output->writeln($this->outputHandler->getSuccessfulStepMessage());
     }
@@ -65,13 +71,5 @@ final class JsonLintHandler extends ToolHandler implements RecursiveToolInterfac
     public function setNeedle($needle)
     {
         $this->needle = $needle;
-    }
-
-    /**
-     * @param array $files
-     */
-    public function setFiles($files)
-    {
-        $this->files = $files;
     }
 }
