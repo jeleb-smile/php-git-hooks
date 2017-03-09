@@ -11,6 +11,8 @@ use Symfony\Component\Console\Helper\ProgressBar;
  */
 abstract class ToolHandler
 {
+    /** @var array  */
+    protected $files = [];
     /** @var OutputHandlerInterface  */
     protected $outputHandler;
     /** @var  OutputInterface */
@@ -43,5 +45,7 @@ abstract class ToolHandler
 
         // create a new progress bar
         $this->progress = new ProgressBar($this->output, count($this->files));
+        $this->progress->setFormatDefinition('custom', ' %current%/%max% -- %percent%% -- %message%');
+        $this->progress->setFormat('custom');
     }
 }

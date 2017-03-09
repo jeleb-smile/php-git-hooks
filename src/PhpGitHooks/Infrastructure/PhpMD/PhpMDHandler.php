@@ -13,8 +13,6 @@ use Symfony\Component\Process\ProcessBuilder;
  */
 class PhpMDHandler extends ToolHandler implements RecursiveToolInterface
 {
-    /** @var  array */
-    private $files;
     /** @var  string */
     private $needle;
 
@@ -25,11 +23,10 @@ class PhpMDHandler extends ToolHandler implements RecursiveToolInterface
      */
     public function run(array $messages)
     {
-        $this->outputHandler->setTitle('Checking code mess with PHPMD');
-        $this->output->write($this->outputHandler->getTitle());
-
         // start and displays the progress bar
         $this->progress->start();
+        $this->progress->setMessage('Checking code mess with PHPMD');
+        $this->output->write($this->outputHandler->getTitle());
 
         $errors = [];
 

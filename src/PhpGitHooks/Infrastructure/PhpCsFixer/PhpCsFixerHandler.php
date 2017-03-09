@@ -10,8 +10,6 @@ use Symfony\Component\Process\ProcessBuilder;
 
 class PhpCsFixerHandler extends ToolHandler implements InteractiveToolInterface, PhpCsFixerHandlerInterface
 {
-    /** @var array */
-    private $files;
     /** @var string */
     private $filesToAnalyze;
     /** @var array */
@@ -26,10 +24,11 @@ class PhpCsFixerHandler extends ToolHandler implements InteractiveToolInterface,
     {
         foreach ($this->levels as $level => $value) {
             if (true === $value) {
-                $this->outputHandler->setTitle('Checking '.strtoupper($level).' code style with PHP-CS-FIXER');
-                $this->output->write($this->outputHandler->getTitle());
                 // start and displays the progress bar
                 $this->progress->start();
+                // start and displays the progress bar
+                $this->progress->setMessage('Checking '.strtoupper($level).' code style with PHP-CS-FIXER');
+                $this->output->write($this->outputHandler->getTitle());
                 $errors = array();
 
                 foreach ($this->files as $file) {

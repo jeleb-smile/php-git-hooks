@@ -10,8 +10,6 @@ use Symfony\Component\Process\ProcessBuilder;
 
 final class JsonLintHandler extends ToolHandler implements RecursiveToolInterface
 {
-    /** @var array  */
-    private $files = [];
     /** @var  string */
     private $needle;
 
@@ -22,11 +20,10 @@ final class JsonLintHandler extends ToolHandler implements RecursiveToolInterfac
      */
     public function run(array $messages)
     {
-        $this->outputHandler->setTitle(sprintf('Checking json code with %s', strtoupper('jsonlint')));
-        $this->output->write($this->outputHandler->getTitle());
-
         // start and displays the progress bar
         $this->progress->start();
+        $this->progress->setMessage(sprintf('Checking json code with %s', strtoupper('jsonlint')));
+        $this->output->write($this->outputHandler->getTitle());
 
         $errors = [];
 

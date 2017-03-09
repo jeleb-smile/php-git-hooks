@@ -24,5 +24,5 @@ interface RecursiveToolInterface
     /**
      * @param array $files
      */
-    public function setFiles($files);
+    public function setFiles(array $files);
 }

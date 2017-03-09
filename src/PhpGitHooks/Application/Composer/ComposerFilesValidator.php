@@ -11,9 +11,6 @@ use PhpGitHooks\Infrastructure\Common\ToolHandlerInterface;
  */
 class ComposerFilesValidator extends ToolHandler implements FilesValidatorInterface, ToolHandlerInterface
 {
-    /** @var array  */
-    private $files;
-
     public function validate()
     {
         $this->outputHandler->setTitle('Checking composer files');

@@ -15,8 +15,6 @@ use Symfony\Component\Process\ProcessBuilder;
 class PhpLintHandler extends ToolHandler implements FilesToolHandlerInterface
 {
     const NEEDLE = '/(\.php)|(\.inc)$/';
-    /** @var array */
-    private $files;
 
     /**
      * @param array $messages
@@ -27,11 +25,10 @@ class PhpLintHandler extends ToolHandler implements FilesToolHandlerInterface
      */
     public function run(array $messages)
     {
-        $this->outputHandler->setTitle('Running PHPLint');
-        $this->output->write($this->outputHandler->getTitle());
-
         // start and displays the progress bar
         $this->progress->start();
+        $this->progress->setMessage('Running PHPLint');
+        $this->output->write($this->outputHandler->getTitle());
 
         foreach ($this->files as $file) {
             $this->progress->advance();

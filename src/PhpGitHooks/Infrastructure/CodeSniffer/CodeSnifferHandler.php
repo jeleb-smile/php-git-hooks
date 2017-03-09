@@ -13,8 +13,6 @@ use Symfony\Component\Process\ProcessBuilder;
  */
 class CodeSnifferHandler extends ToolHandler
 {
-    /** @var array */
-    private $files;
     /** @var string */
     private $neddle;
     /** @var string */
@@ -27,11 +25,10 @@ class CodeSnifferHandler extends ToolHandler
      */
     public function run(array $messages)
     {
-        $this->outputHandler->setTitle('Checking '.$this->standard.' code style with PHPCS');
-        $this->output->write($this->outputHandler->getTitle());
-
         // start and displays the progress bar
         $this->progress->start();
+        $this->progress->setMessage('Checking '.$this->standard.' code style with PHPCS');
+        $this->output->write($this->outputHandler->getTitle());
 
         foreach ($this->files as $index => $file) {
             $this->progress->advance();
