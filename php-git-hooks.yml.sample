@@ -1,7 +1,10 @@
 pre-commit:
   enabled: true
   execute:
-    ignore: []
+    ignore: 
+      - src/Meyclub/Admin
+      - app/
+      - src/Meyclub/Core/PayzenBundle/Services/V5.php
     php-cs-fixer:
         enabled:    true
         levels:
@@ -9,27 +12,29 @@ pre-commit:
             psr1:     true
             psr2:     true
             symfony:  true
-        options: '--dry-run'
+        options: '-vvv'
     phpunit:
-        enabled:        true
+        enabled:        false
         random-mode:    true
-    phplint:        true
+    phplint:        
+        enabled: true
+        options: '-f'
     phpcs:
         enabled:    true
         standard:   
-            PEAR:     true
+            PEAR:     false
             PSR1:     true
             PSR2:     true
-            Squiz:    true
-            PHPCS:    true
-            Zend:     true
-            MySource: true
+            Squiz:    false
+            PHPCS:    false
+            Zend:     false
+            MySource: false
             Symfony2: true
     phpmd:          true
-    composer:       true
+    composer:       false
   message:
     right-message: 'HEY, GOOD JOB!!'
     error-message: 'FIX YOUR FUCKING CODE!!'
 commit-msg:
-    enabled:       true
+    enabled: true
     regular-expression: '#[0-9]{2,7}\s.*'

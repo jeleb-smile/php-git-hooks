@@ -16,6 +16,9 @@ class PhpLintHandler extends ToolHandler implements FilesToolHandlerInterface
 {
     const NEEDLE = '/(\.php)|(\.inc)$/';
 
+    /** @var string */
+    private $options = null;
+
     /**
      * @param array $messages
      *
@@ -36,7 +39,14 @@ class PhpLintHandler extends ToolHandler implements FilesToolHandlerInterface
                 continue;
             }
 
-            $processBuilder = new ProcessBuilder(array('php', '-l', $file));
+            $processBuilder = new ProcessBuilder(
+                array(
+                    'php',
+                    '-l',
+                    $this->options,
+                    $file,
+                )
+            );
             /** @var Process $process */
             $process = $processBuilder->getProcess();
             $process->run();
@@ -54,5 +64,12 @@ class PhpLintHandler extends ToolHandler implements FilesToolHandlerInterface
         $this->progress->finish();
 
         $this->output->writeln($this->outputHandler->getSuccessfulStepMessage());
+    }
+    /**
+     * @param array $options
+     */
+    public function setOptions($options = '')
+    {
+        $this->options = $options;
     }
 }

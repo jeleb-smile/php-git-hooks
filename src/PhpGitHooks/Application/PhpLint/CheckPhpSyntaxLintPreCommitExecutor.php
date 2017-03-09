@@ -36,8 +36,11 @@ class CheckPhpSyntaxLintPreCommitExecutor extends PreCommitExecutor
      */
     public function run(OutputInterface $output, array $files)
     {
-        if ($this->isEnabled()) {
+        $data = $this->preCommitConfig->extraOptions($this->commandName());
+
+        if (true === $data['enabled']) {
             $this->phpLintHandler->setOutput($output);
+            $this->phpLintHandler->setOptions($data['options']);
             $this->phpLintHandler->setFiles($files);
             $this->phpLintHandler->run($this->getMessages());
         }
